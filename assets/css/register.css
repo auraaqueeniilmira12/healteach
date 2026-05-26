@@ -1,0 +1,344 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+}
+
+.auth-container {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.auth-card {
+    background: white;
+    border-radius: 20px;
+    display: flex;
+    max-width: 880px;
+    width: 100%;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* KIRI - FORM */
+.auth-left {
+    flex: 1;
+    padding: 28px 24px;
+    background: white;
+}
+
+/* KANAN - UPLOAD FOTO */
+.auth-right {
+    width: 240px;
+    background: linear-gradient(135deg, #6a1b9a 0%, #8e24aa 100%);
+    padding: 28px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.auth-logo {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.auth-logo i {
+    font-size: 36px;
+    color: #6a1b9a;
+}
+
+.auth-logo h1 {
+    font-size: 20px;
+    color: #333;
+    margin-top: 4px;
+}
+
+.auth-logo p {
+    color: #888;
+    font-size: 12px;
+    margin-top: 2px;
+}
+
+.form-group {
+    margin-bottom: 12px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 4px;
+    font-size: 12px;
+    font-weight: 500;
+    color: #555;
+}
+
+.form-group label i {
+    margin-right: 5px;
+    color: #6a1b9a;
+    font-size: 11px;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 13px;
+    transition: all 0.2s;
+    font-family: inherit;
+    background: #fafafa;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #6a1b9a;
+    background: white;
+    box-shadow: 0 0 0 2px rgba(106, 27, 154, 0.1);
+}
+
+.radio-group {
+    display: flex;
+    gap: 16px;
+    padding-top: 2px;
+}
+
+.radio-group label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-weight: normal;
+    cursor: pointer;
+    margin-bottom: 0;
+    font-size: 12px;
+}
+
+.radio-group input {
+    width: 14px;
+    height: 14px;
+    cursor: pointer;
+    margin: 0;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.btn {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+    background: linear-gradient(135deg, #6a1b9a 0%, #8e24aa 100%);
+    color: white;
+    margin-top: 6px;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(106, 27, 154, 0.3);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+.error-message {
+    background: #fff0f0;
+    color: #e74c3c;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 11px;
+    margin-bottom: 12px;
+    display: none;
+    border-left: 3px solid #e74c3c;
+}
+
+.error-message.show {
+    display: block;
+}
+
+.auth-footer {
+    text-align: center;
+    margin-top: 16px;
+    font-size: 12px;
+    color: #888;
+}
+
+.auth-footer a {
+    color: #6a1b9a;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.auth-footer a:hover {
+    text-decoration: underline;
+}
+
+/* ========== SISI KANAN - UPLOAD FOTO ========== */
+.photo-upload {
+    text-align: center;
+    width: 100%;
+}
+
+.photo-preview {
+    width: 110px;
+    height: 110px;
+    margin: 0 auto 16px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    border: 2px dashed rgba(255, 255, 255, 0.5);
+}
+
+.photo-preview i {
+    font-size: 36px;
+    color: white;
+    margin-bottom: 6px;
+}
+
+.photo-preview p {
+    color: white;
+    font-size: 11px;
+    opacity: 0.8;
+}
+
+.photo-preview:hover {
+    background: rgba(255, 255, 255, 0.3);
+    border-color: white;
+}
+
+.photo-preview.has-image {
+    background: transparent;
+    border: 2px solid white;
+}
+
+.photo-preview.has-image i {
+    display: none;
+}
+
+.photo-preview.has-image p {
+    display: none;
+}
+
+.photo-preview img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.btn-upload {
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    padding: 8px 16px;
+    border-radius: 25px;
+    color: white;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.3s;
+    width: 100%;
+    margin-top: 6px;
+}
+
+.btn-upload:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.photo-note {
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.7);
+    margin-top: 10px;
+    text-align: center;
+}
+
+.info-box {
+    margin-top: 24px;
+    text-align: center;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+}
+
+.info-box i {
+    font-size: 22px;
+    color: white;
+    margin-bottom: 6px;
+}
+
+.info-box p {
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.3;
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 800px) {
+    .auth-card {
+        flex-direction: column;
+        max-width: 420px;
+    }
+    
+    .auth-right {
+        width: 100%;
+        padding: 24px 20px;
+    }
+    
+    .photo-preview {
+        width: 90px;
+        height: 90px;
+    }
+    
+    .photo-preview i {
+        font-size: 28px;
+    }
+    
+    .info-box {
+        margin-top: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .auth-left {
+        padding: 20px 16px;
+    }
+    
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+    
+    .auth-logo i {
+        font-size: 32px;
+    }
+    
+    .auth-logo h1 {
+        font-size: 20px;
+    }
+    
+    .btn {
+        padding: 8px;
+        font-size: 13px;
+    }
+}

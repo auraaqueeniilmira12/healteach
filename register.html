@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar - HEALTEACH</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/register.css">
+</head>
+<body>
+
+    <div class="auth-container">
+        <div class="auth-card">
+            
+            <!-- KIRI: FORM REGISTRASI -->
+            <div class="auth-left">
+                <div class="auth-logo">
+                    <i class="fas fa-leaf"></i>
+                    <h1>HEALTEACH</h1>
+                    <p>Buat akun baru</p>
+                </div>
+                
+                <form id="register-form">
+                    <div class="form-group">
+                        <label><i class="fas fa-envelope"></i> Email</label>
+                        <input type="email" id="reg-email" required placeholder="contoh@email.com">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label><i class="fas fa-lock"></i> Password</label>
+                        <input type="password" id="reg-password" required placeholder="Minimal 6 karakter">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label><i class="fas fa-user"></i> Nama Lengkap</label>
+                        <input type="text" id="reg-name" required placeholder="Nama Anda">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label><i class="fas fa-calendar"></i> Usia</label>
+                        <input type="number" id="reg-age" required placeholder="Contoh: 25">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label><i class="fas fa-venus-mars"></i> Jenis Kelamin</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="gender" value="Laki-laki"> Laki-laki</label>
+                            <label><input type="radio" name="gender" value="Perempuan"> Perempuan</label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label><i class="fas fa-weight-scale"></i> Berat (kg)</label>
+                            <input type="number" id="reg-weight" required placeholder="Contoh: 58">
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-ruler"></i> Tinggi (cm)</label>
+                            <input type="number" id="reg-height" required placeholder="Contoh: 160">
+                        </div>
+                    </div>
+                    
+                    <div class="error-message" id="register-error"></div>
+                    
+                    <button type="submit" class="btn btn-primary">DAFTAR</button>
+                </form>
+                
+                <div class="auth-footer">
+                    Sudah punya akun? <a href="login.html">Masuk di sini</a>
+                </div>
+            </div>
+
+            <!-- KANAN: UPLOAD FOTO PROFILE -->
+            <div class="auth-right">
+                <div class="photo-upload">
+                    <div class="photo-preview" id="photo-preview">
+                        <i class="fas fa-camera"></i>
+                        <p>Foto Profile</p>
+                    </div>
+                    <input type="file" id="profile-photo" accept="image/*" style="display: none;">
+                    <button type="button" id="upload-photo-btn" class="btn-upload">
+                        <i class="fas fa-upload"></i> Upload Foto
+                    </button>
+                    <p class="photo-note">Foto tidak wajib, bisa diisi nanti</p>
+                </div>
+                
+                <div class="info-box">
+                    <i class="fas fa-shield-alt"></i>
+                    <p>Data Anda aman dan tersimpan secara lokal di perangkat Anda</p>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    <script src="assets/js/script.js"></script>
+    <script src="assets/js/login-register.js"></script>
+</body>
+</html>

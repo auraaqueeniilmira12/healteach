@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Masuk - HEALTEACH</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/login.css">
+</head>
+<body>
+
+    <div class="auth-container">
+        <div class="auth-card">
+            
+            <!-- KIRI: FORM LOGIN -->
+            <div class="auth-left">
+                <div class="auth-logo">
+                    <i class="fas fa-leaf"></i>
+                    <h1>HEALTEACH</h1>
+                    <p>Masuk ke akun Anda</p>
+                </div>
+                
+                <form id="login-form">
+                    <div class="form-group">
+                        <label><i class="fas fa-envelope"></i> Email</label>
+                        <input type="email" id="login-email" required placeholder="contoh@email.com">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label><i class="fas fa-lock"></i> Password</label>
+                        <input type="password" id="login-password" required placeholder="Password Anda">
+                    </div>
+                    
+                    <div class="form-options">
+                        <label class="remember-me">
+                            <input type="checkbox" id="remember-checkbox"> Ingat saya
+                        </label>
+                        <a href="#" class="forgot-password">Lupa password?</a>
+                    </div>
+                    
+                    <div class="error-message" id="login-error"></div>
+                    
+                    <button type="submit" class="btn btn-primary">MASUK</button>
+                </form>
+                
+                <div class="auth-footer">
+                    Belum punya akun? <a href="register.html">Daftar di sini</a>
+                </div>
+            </div>
+
+            <!-- KANAN: ILUSTRASI / INFO -->
+            <div class="auth-right">
+                <div class="illustration">
+                    <i class="fas fa-heartbeat"></i>
+                    <h3>Hidup Sehat</h3>
+                    <p>Mulai perjalanan sehatmu bersama HEALTEACH</p>
+                </div>
+                
+                <div class="info-features">
+                    <div class="feature-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Pantau kesehatan harian</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Rencana & tantangan seru</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Komunitas supportif</span>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    <script src="assets/js/script.js"></script>
+    <script src="assets/js/login-register.js"></script>
+</body>
+</html>
