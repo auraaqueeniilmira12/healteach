@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>HEALTEACH - Profil Saya</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="profile.css">
+</head>
+<body>
+    <!-- MOBILE HEADER -->
+    <div class="mobile-header">
+        <button class="mobile-back-btn" onclick="history.back()">
+            <i class="fas fa-arrow-left"></i>
+        </button>
+        <div class="mobile-header-title">Profil Saya</div>
+        <div class="mobile-header-placeholder"></div>
+    </div>
+
+    <!-- SIDEBAR (sama seperti index) -->
+    <aside class="sidebar">
+        <div class="logo">
+            <i class="fas fa-leaf"></i>
+            <h1>HEALTEACH</h1>
+        </div>
+        
+        <div class="nav-links">
+            <a href="../index.html"><i class="fas fa-home"></i><span>Beranda</span></a>
+            <a href="#"><i class="fas fa-book"></i><span>Konten</span></a>
+            <a href="#"><i class="fas fa-calendar"></i><span>Rencana</span></a>
+            <a href="#"><i class="fas fa-check-square"></i><span>Checklist</span></a>
+            <a href="#" class="active"><i class="fas fa-user"></i><span>Profil</span></a>
+        </div>
+        
+        <div class="nav-icons">
+            <button class="search-btn"><i class="fas fa-search"></i></button>
+            <button class="bell-btn"><i class="fas fa-bell"></i></button>
+            <div class="avatar-placeholder" id="avatarBtn">
+                <i class="fas fa-user-circle"></i>
+            </div>
+        </div>
+    </aside>
+
+    <!-- MAIN CONTENT - HALAMAN PROFIL -->
+    <main class="main-content">
+        <div class="profile-container">
+            <!-- Header Profil -->
+            <div class="profile-header">
+                <div class="profile-cover"></div>
+                <div class="profile-photo-wrapper">
+                    <div class="profile-photo" id="profilePhoto">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <button class="btn-change-photo" id="changePhotoBtn">
+                        <i class="fas fa-camera"></i>
+                    </button>
+                </div>
+                <div class="profile-name-header">
+                    <h1 id="profileName">User Name</h1>
+                    <span class="profile-level" id="profileLevel">
+                        <i class="fas fa-medal"></i> Silver Level
+                    </span>
+                </div>
+            </div>
+
+            <!-- Statistik Ringkas -->
+            <div class="profile-stats">
+                <div class="stat-card">
+                    <i class="fas fa-calendar-alt"></i>
+                    <div>
+                        <span class="stat-value" id="memberSince">-</span>
+                        <span class="stat-label">Bergabung</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-fire"></i>
+                    <div>
+                        <span class="stat-value" id="totalPoints">0</span>
+                        <span class="stat-label">Poin</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-check-circle"></i>
+                    <div>
+                        <span class="stat-value" id="totalChecklist">0</span>
+                        <span class="stat-label">Checklist</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Data Diri -->
+            <div class="profile-card">
+                <div class="card-header">
+                    <i class="fas fa-address-card"></i>
+                    <h3>Data Diri</h3>
+                    <button class="btn-edit" id="editProfileBtn">
+                        <i class="fas fa-pen"></i> Edit Profil
+                    </button>
+                </div>
+                <div class="profile-info-grid">
+                    <div class="info-item">
+                        <div class="info-icon"><i class="fas fa-envelope"></i></div>
+                        <div class="info-content">
+                            <span class="info-label">Email</span>
+                            <span class="info-value" id="profileEmail">-</span>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon"><i class="fas fa-calendar"></i></div>
+                        <div class="info-content">
+                            <span class="info-label">Usia</span>
+                            <span class="info-value" id="profileAge">- tahun</span>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon"><i class="fas fa-venus-mars"></i></div>
+                        <div class="info-content">
+                            <span class="info-label">Jenis Kelamin</span>
+                            <span class="info-value" id="profileGender">-</span>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon"><i class="fas fa-weight-scale"></i></div>
+                        <div class="info-content">
+                            <span class="info-label">Berat Badan</span>
+                            <span class="info-value" id="profileWeight">- kg</span>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon"><i class="fas fa-ruler"></i></div>
+                        <div class="info-content">
+                            <span class="info-label">Tinggi Badan</span>
+                            <span class="info-value" id="profileHeight">- cm</span>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon"><i class="fas fa-calculator"></i></div>
+                        <div class="info-content">
+                            <span class="info-label">BMI</span>
+                            <span class="info-value" id="profileBMI">-</span>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon"><i class="fas fa-bullseye"></i></div>
+                        <div class="info-content">
+                            <span class="info-label">Tujuan Kesehatan</span>
+                            <span class="info-value" id="profileGoal">-</span>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon"><i class="fas fa-trophy"></i></div>
+                        <div class="info-content">
+                            <span class="info-label">Level / Peringkat</span>
+                            <span class="info-value" id="profileRank">-</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Menu Lainnya -->
+            <div class="profile-card">
+                <div class="card-header">
+                    <i class="fas fa-cog"></i>
+                    <h3>Pengaturan</h3>
+                </div>
+                <div class="menu-list">
+                    <div class="menu-item" id="changePasswordBtn">
+                        <i class="fas fa-lock"></i>
+                        <span>Ubah Password</span>
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                    <div class="menu-item" id="privacyPolicyBtn">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>Kebijakan Privasi</span>
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                    <div class="menu-item" id="logoutBtn">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Logout</span>
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../assets/js/script.js"></script>
+    <script src="profile.js"></script>
+</body>
+</html>
