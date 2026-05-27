@@ -6,6 +6,20 @@
     <title>HEALTEACH - Healthy Education | Sidebar Version</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <link rel="stylesheet" href="assets/css/style.css">
+    
+    <!-- CEK LOGIN - Redirect ke login jika belum login -->
+    <script>
+        // Cek apakah user sudah login
+        function checkLoginAndRedirect() {
+            const currentUser = localStorage.getItem('currentUser');
+            if (!currentUser) {
+                // Jika belum login, redirect ke halaman login
+                window.location.href = 'login.html';
+            }
+        }
+        // Jalankan pengecekan segera
+        checkLoginAndRedirect();
+    </script>
 </head>
 <body>
     <!-- MOBILE HEADER - hanya muncul di versi mobile (≤768px) -->
@@ -25,7 +39,7 @@
         </div>
         
         <div class="nav-links">
-            <a href="#"><i class="fas fa-home"></i><span>Beranda</span></a>
+            <a href="index.html"><i class="fas fa-home"></i><span>Beranda</span></a>
             <a href="#"><i class="fas fa-book"></i><span>Konten</span></a>
             <a href="#"><i class="fas fa-calendar"></i><span>Rencana</span></a>
             <a href="#"><i class="fas fa-check-square"></i><span>Checklist</span></a>
