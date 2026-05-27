@@ -2,13 +2,22 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>HEALTEACH - Healthy Education | Sidebar Version</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-    <!-- SIDEBAR VERTICAL - menggantikan navbar horizontal -->
+    <!-- MOBILE HEADER - hanya muncul di versi mobile (≤768px) -->
+    <div class="mobile-header">
+        <button class="mobile-search-btn"><i class="fas fa-search"></i></button>
+        <button class="mobile-bell-btn"><i class="fas fa-bell"></i></button>
+        <div class="avatar-placeholder mobile-avatar" id="mobileAvatarBtn">
+            <i class="fas fa-user-circle"></i>
+        </div>
+    </div>
+
+    <!-- SIDEBAR VERTICAL - di desktop jadi sidebar, di mobile jadi bottom navigation -->
     <aside class="sidebar">
         <div class="logo">
             <i class="fas fa-leaf"></i>
@@ -16,23 +25,38 @@
         </div>
         
         <div class="nav-links">
-            <a href="#"><i class="fas fa-home"></i> Beranda</a>
-            <a href="#"><i class="fas fa-book"></i> Konten</a>
-            <a href="#"><i class="fas fa-calendar"></i> Rencana</a>
-            <a href="#"><i class="fas fa-check-square"></i> Checklist</a>
-            <a href="#"><i class="fas fa-user"></i> Profil</a>
+            <a href="#"><i class="fas fa-home"></i><span>Beranda</span></a>
+            <a href="#"><i class="fas fa-book"></i><span>Konten</span></a>
+            <a href="#"><i class="fas fa-calendar"></i><span>Rencana</span></a>
+            <a href="#"><i class="fas fa-check-square"></i><span>Checklist</span></a>
+            <a href="#"><i class="fas fa-user"></i><span>Profil</span></a>
         </div>
         
         <div class="nav-icons">
-            <button><i class="fas fa-search"></i></button>
-            <button><i class="fas fa-bell"></i></button>
-            <div class="avatar-placeholder">
+            <button class="search-btn"><i class="fas fa-search"></i></button>
+            <button class="bell-btn"><i class="fas fa-bell"></i></button>
+            <div class="avatar-placeholder" id="avatarBtn">
                 <i class="fas fa-user-circle"></i>
             </div>
         </div>
     </aside>
 
-    <!-- MAIN CONTENT AREA - KOSONG, hanya sebagai area sampingan -->
-    <main class="main-content"></main>
+    <!-- MAIN CONTENT AREA - dengan GREETING CARD baru -->
+    <main class="main-content">
+        <div class="welcome-section">
+            <div class="greeting-card">
+                <div class="greeting-icon">
+                    <i class="fas fa-leaf"></i>
+                </div>
+                <div class="greeting-text">
+                    <h2 id="greeting-message">Selamat Pagi,</h2>
+                    <h1 id="user-name">User</h1>
+                    <p id="motivation-quote">Tetap semangat untuk hidup sehat hari ini!</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="assets/js/script.js"></script>
 </body>
 </html>

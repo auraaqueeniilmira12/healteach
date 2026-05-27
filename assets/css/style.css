@@ -11,7 +11,7 @@ body {
     min-height: 100vh;
 }
 
-/* ========== SIDEBAR (versi side bar) ========== */
+/* ========== SIDEBAR (versi desktop) ========== */
 .sidebar {
     background: linear-gradient(135deg, #6a1b9a 0%, #8e24aa 100%);
     width: 280px;
@@ -27,7 +27,7 @@ body {
     padding: 24px 0 32px 0;
 }
 
-/* ========== LOGO (sama persis dengan style asli) ========== */
+/* ========== LOGO ========== */
 .logo {
     display: flex;
     align-items: center;
@@ -48,7 +48,7 @@ body {
     letter-spacing: 1px;
 }
 
-/* ========== NAV LINKS (vertical) ========== */
+/* ========== NAV LINKS (vertical di desktop) ========== */
 .nav-links {
     display: flex;
     flex-direction: column;
@@ -76,6 +76,10 @@ body {
     text-align: center;
 }
 
+.nav-links a span {
+    display: inline-block;
+}
+
 .nav-links a:hover {
     background: rgba(255, 255, 255, 0.2);
     transform: translateX(4px);
@@ -85,7 +89,7 @@ body {
     transform: scale(0.98);
 }
 
-/* ========== NAV ICONS (di sidebar bagian bawah) ========== */
+/* ========== NAV ICONS (di sidebar bagian bawah desktop) ========== */
 .nav-icons {
     display: flex;
     align-items: center;
@@ -119,7 +123,7 @@ body {
     transform: scale(1.05);
 }
 
-/* Avatar placeholder - menggantikan img yang tidak ada */
+/* Avatar placeholder */
 .avatar-placeholder {
     width: 40px;
     height: 40px;
@@ -144,100 +148,375 @@ body {
     border-color: #e1bee7;
 }
 
-/* ========== MAIN CONTENT AREA (kosong) ========== */
+/* ========== MAIN CONTENT AREA dengan GREETING CARD ========== */
 .main-content {
     margin-left: 280px;
     flex: 1;
     min-height: 100vh;
-    background-color: #f5f7fa;
+    background: #f5f7fa;
+    padding: 30px 40px;
 }
 
-/* ========== RESPONSIVE ========== */
+.welcome-section {
+    max-width: 100%;
+}
+
+/* GREETING CARD - style baru */
+.greeting-card {
+    background: linear-gradient(135deg, #ffffff 0%, #f8f4fc 100%);
+    border-radius: 28px;
+    padding: 28px 32px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    box-shadow: 0 4px 15px rgba(106, 27, 154, 0.08);
+    border: 1px solid rgba(106, 27, 154, 0.1);
+    transition: all 0.3s ease;
+}
+
+.greeting-card:hover {
+    box-shadow: 0 8px 25px rgba(106, 27, 154, 0.12);
+    transform: translateY(-2px);
+}
+
+.greeting-icon {
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(135deg, #6a1b9a 0%, #8e24aa 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 6px 12px rgba(106, 27, 154, 0.2);
+}
+
+.greeting-icon i {
+    font-size: 32px;
+    color: white;
+}
+
+.greeting-text {
+    flex: 1;
+}
+
+.greeting-text h2 {
+    font-size: 20px;
+    font-weight: 500;
+    color: #6a1b9a;
+    margin-bottom: 6px;
+}
+
+.greeting-text h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 8px;
+}
+
+.greeting-text p {
+    font-size: 14px;
+    color: #7f8c8d;
+    margin: 0;
+}
+
+/* ========== ANIMASI HALUS ========== */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.greeting-card {
+    animation: fadeInUp 0.4s ease-out;
+}
+
+/* ============================================ */
+/* ========== MOBILE HEADER (hanya di HP) ========== */
+/* ============================================ */
+.mobile-header {
+    display: none;
+}
+
+/* ============================================ */
+/* ========== RESPONSIVE MOBILE ========== */
+/* ============================================ */
 @media (max-width: 768px) {
+    body {
+        flex-direction: column;
+    }
+    
+    /* TAMPILKAN MOBILE HEADER */
+    .mobile-header {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 12px;
+        padding: 12px 16px;
+        background: white;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 999;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        border-bottom: 1px solid #e8eef5;
+    }
+    
+    .mobile-header button {
+        background: #f0f0f0;
+        border: none;
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .mobile-header button i {
+        font-size: 16px;
+        color: #6a1b9a;
+    }
+    
+    .mobile-header button:hover {
+        background: #e0e0e0;
+        transform: scale(1.05);
+    }
+    
+    .mobile-header .avatar-placeholder {
+        width: 38px;
+        height: 38px;
+        background: #f0f0f0;
+        border: 1px solid #ce93d8;
+    }
+    
+    .mobile-header .avatar-placeholder i {
+        font-size: 20px;
+        color: #6a1b9a;
+    }
+    
+    /* SIDEBAR berubah jadi BOTTOM NAVIGATION */
     .sidebar {
-        width: 240px;
+        width: 100%;
+        height: auto;
+        position: fixed;
+        bottom: 0;
+        top: auto;
+        left: 0;
+        right: 0;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 8px 16px;
+        background: linear-gradient(135deg, #6a1b9a 0%, #8e24aa 100%);
+        z-index: 1000;
+        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
     }
     
-    .main-content {
-        margin-left: 240px;
+    /* Logo disembunyikan di mobile */
+    .logo {
+        display: none;
     }
     
-    .logo h1 {
-        font-size: 1.2rem;
-    }
-    
-    .logo i {
-        font-size: 22px;
+    /* NAV LINKS - horizontal di bottom, rapi */
+    .nav-links {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        align-items: center;
+        gap: 8px;
+        flex: 1;
+        padding: 0;
+        margin: 0;
     }
     
     .nav-links a {
-        padding: 10px 14px;
-        font-size: 13px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+        padding: 6px 12px;
+        border-radius: 30px;
+        font-size: 10px;
+        font-weight: 500;
+        min-width: 60px;
+    }
+    
+    .nav-links a i {
+        font-size: 18px;
+        width: auto;
+        margin: 0;
+    }
+    
+    .nav-links a span {
+        display: inline-block;
+        font-size: 10px;
+    }
+    
+    .nav-links a:hover {
+        transform: translateY(-2px);
+        background: rgba(255, 255, 255, 0.15);
+    }
+    
+    /* SEMBUNYIKAN nav-icons yang ada di sidebar (pindah ke mobile header) */
+    .nav-icons {
+        display: none;
+    }
+    
+    /* Main content - sesuaikan padding untuk fixed header & bottom nav */
+    .main-content {
+        margin-left: 0;
+        padding: 70px 16px 70px 16px;
+        min-height: 100vh;
+    }
+    
+    /* GREETING CARD responsive mobile */
+    .greeting-card {
+        padding: 20px 24px;
+        gap: 16px;
+    }
+    
+    .greeting-icon {
+        width: 55px;
+        height: 55px;
+    }
+    
+    .greeting-icon i {
+        font-size: 26px;
+    }
+    
+    .greeting-text h2 {
+        font-size: 16px;
+    }
+    
+    .greeting-text h1 {
+        font-size: 22px;
+    }
+    
+    .greeting-text p {
+        font-size: 12px;
+    }
+}
+
+/* ============================================ */
+/* ========== MOBILE KECIL (max-width: 480px) ========== */
+/* ============================================ */
+@media (max-width: 480px) {
+    .mobile-header {
+        padding: 10px 12px;
+        gap: 10px;
+    }
+    
+    .mobile-header button {
+        width: 34px;
+        height: 34px;
+    }
+    
+    .mobile-header button i {
+        font-size: 14px;
+    }
+    
+    .mobile-header .avatar-placeholder {
+        width: 34px;
+        height: 34px;
+    }
+    
+    .mobile-header .avatar-placeholder i {
+        font-size: 18px;
+    }
+    
+    .sidebar {
+        padding: 6px 12px;
+    }
+    
+    .nav-links {
+        gap: 4px;
+    }
+    
+    .nav-links a {
+        padding: 5px 8px;
+        min-width: 50px;
     }
     
     .nav-links a i {
         font-size: 16px;
     }
-}
-
-@media (max-width: 576px) {
-    .sidebar {
-        width: 70px;
-        padding: 20px 0 20px 0;
-    }
-    
-    .logo {
-        justify-content: center;
-        padding: 0;
-    }
-    
-    .logo h1 {
-        display: none;
-    }
-    
-    .logo i {
-        font-size: 28px;
-        margin: 0 auto;
-    }
-    
-    .nav-links {
-        padding: 0 12px;
-    }
     
     .nav-links a span {
-        display: none;
-    }
-    
-    .nav-links a {
-        justify-content: center;
-        padding: 12px;
-    }
-    
-    .nav-links a i {
-        font-size: 20px;
-        margin: 0;
-    }
-    
-    .nav-icons button {
-        width: 35px;
-        height: 35px;
-    }
-    
-    .nav-icons {
-        gap: 12px;
-        padding: 16px 12px;
-    }
-    
-    .avatar-placeholder {
-        width: 35px;
-        height: 35px;
-    }
-    
-    .avatar-placeholder i {
-        font-size: 18px;
+        font-size: 9px;
     }
     
     .main-content {
-        margin-left: 70px;
+        padding: 65px 12px 65px 12px;
+    }
+    
+    .greeting-card {
+        padding: 16px 18px;
+        gap: 12px;
+    }
+    
+    .greeting-icon {
+        width: 45px;
+        height: 45px;
+    }
+    
+    .greeting-icon i {
+        font-size: 22px;
+    }
+    
+    .greeting-text h2 {
+        font-size: 14px;
+    }
+    
+    .greeting-text h1 {
+        font-size: 18px;
+    }
+    
+    .greeting-text p {
+        font-size: 11px;
+    }
+}
+
+/* ============================================ */
+/* ========== TABLET (769px - 1024px) ========== */
+/* ============================================ */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .sidebar {
+        width: 250px;
+    }
+    
+    .main-content {
+        margin-left: 250px;
+        padding: 25px 30px;
+    }
+    
+    .greeting-card {
+        padding: 24px 28px;
+        gap: 20px;
+    }
+    
+    .greeting-icon {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .greeting-icon i {
+        font-size: 28px;
+    }
+    
+    .greeting-text h2 {
+        font-size: 18px;
+    }
+    
+    .greeting-text h1 {
+        font-size: 24px;
     }
 }
