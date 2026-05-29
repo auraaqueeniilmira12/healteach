@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <link rel="stylesheet" href="assets/css/style.css">
     
-    <!-- CEK LOGIN - Redirect ke login jika belum login -->
     <script>
         function checkLoginAndRedirect() {
             const currentUser = localStorage.getItem('currentUser');
@@ -19,7 +18,6 @@
     </script>
 </head>
 <body>
-    <!-- MOBILE HEADER -->
     <div class="mobile-header">
         <button class="mobile-search-btn"><i class="fas fa-search"></i></button>
         <button class="mobile-bell-btn"><i class="fas fa-bell"></i></button>
@@ -28,7 +26,6 @@
         </div>
     </div>
 
-    <!-- SIDEBAR -->
     <aside class="sidebar">
         <div class="logo">
             <i class="fas fa-leaf"></i>
@@ -38,7 +35,7 @@
         <div class="nav-links">
             <a href="index.html"><i class="fas fa-home"></i><span>Beranda</span></a>
             <a href="#"><i class="fas fa-book"></i><span>Konten</span></a>
-            <a href="#"><i class="fas fa-calendar"></i><span>Rencana</span></a>
+            <a href="#"><i class="fas fa-calendar-alt"></i><span>Rencana</span></a>
             <a href="#"><i class="fas fa-check-square"></i><span>Checklist</span></a>
             <a href="profile/index.html"><i class="fas fa-user"></i><span>Profil</span></a>
         </div>
@@ -52,10 +49,8 @@
         </div>
     </aside>
 
-    <!-- MAIN CONTENT -->
     <main class="main-content">
         <div class="welcome-section">
-            <!-- GREETING CARD -->
             <div class="greeting-card">
                 <div class="greeting-icon">
                     <i class="fas fa-leaf"></i>
@@ -67,7 +62,6 @@
                 </div>
             </div>
 
-            <!-- STREAK & ACHIEVEMENT -->
             <div class="stats-row">
                 <div class="stat-box">
                     <div class="stat-icon streak-icon">
@@ -92,7 +86,7 @@
                 </div>
             </div>
 
-            <!-- RINGKASAN HARI INI -->
+            <!-- RINGKASAN HARI INI - TANPA PROGRESS BAR -->
             <div class="daily-summary-card">
                 <div class="card-header">
                     <i class="fas fa-clipboard-list"></i>
@@ -100,7 +94,6 @@
                     <span class="summary-date" id="summaryDate"></span>
                 </div>
                 <div class="summary-list">
-                    <!-- Checklist -->
                     <div class="summary-item">
                         <div class="summary-icon">
                             <i class="fas fa-check-square"></i>
@@ -110,12 +103,8 @@
                                 <span>Checklist</span>
                                 <span class="summary-value-text" id="checklistProgress">0/5</span>
                             </div>
-                            <div class="progress-bar">
-                                <div class="progress-fill" id="checklistFill" style="width: 0%"></div>
-                            </div>
                         </div>
                     </div>
-                    <!-- Langkah -->
                     <div class="summary-item">
                         <div class="summary-icon">
                             <i class="fas fa-shoe-prints"></i>
@@ -123,14 +112,10 @@
                         <div class="summary-content">
                             <div class="summary-label">
                                 <span>Langkah</span>
-                                <span class="summary-value-text" id="stepsProgress">0/8000</span>
-                            </div>
-                            <div class="progress-bar">
-                                <div class="progress-fill" id="stepsFill" style="width: 0%"></div>
+                                <span class="summary-value-text" id="stepsProgress">0/8,000</span>
                             </div>
                         </div>
                     </div>
-                    <!-- Air -->
                     <div class="summary-item">
                         <div class="summary-icon">
                             <i class="fas fa-tint"></i>
@@ -140,12 +125,8 @@
                                 <span>Air</span>
                                 <span class="summary-value-text" id="waterProgress">0/8 gelas</span>
                             </div>
-                            <div class="progress-bar">
-                                <div class="progress-fill" id="waterFill" style="width: 0%"></div>
-                            </div>
                         </div>
                     </div>
-                    <!-- Tidur -->
                     <div class="summary-item">
                         <div class="summary-icon">
                             <i class="fas fa-bed"></i>
@@ -155,12 +136,8 @@
                                 <span>Tidur</span>
                                 <span class="summary-value-text" id="sleepProgress">0/8 jam</span>
                             </div>
-                            <div class="progress-bar">
-                                <div class="progress-fill" id="sleepFill" style="width: 0%"></div>
-                            </div>
                         </div>
                     </div>
-                    <!-- Screen Time -->
                     <div class="summary-item">
                         <div class="summary-icon">
                             <i class="fas fa-mobile-alt"></i>
@@ -170,15 +147,56 @@
                                 <span>Screen Time</span>
                                 <span class="summary-value-text" id="screentimeProgress">0/4 jam</span>
                             </div>
-                            <div class="progress-bar">
-                                <div class="progress-fill" id="screentimeFill" style="width: 0%"></div>
-                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- KONTEN HARI INI - REKOMENDASI -->
+            <div class="challenges-card">
+                <div class="card-header">
+                    <i class="fas fa-fire"></i>
+                    <h3>Tantangan Aktif</h3>
+                    <span class="challenge-badge">Ikuti & Menangkan</span>
+                </div>
+                <div class="challenges-list">
+                    <div class="challenge-item">
+                        <div class="challenge-icon">
+                            <i class="fas fa-tint"></i>
+                        </div>
+                        <div class="challenge-content">
+                            <div class="challenge-title">
+                                <span class="challenge-name">7 hari minum 2L air</span>
+                                <span class="challenge-progress-text" id="challengeWaterProgress">40% (Hari ke-3)</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="challengeWaterFill" style="width: 40%"></div>
+                            </div>
+                            <button class="challenge-btn" onclick="window.location.href='konten.html?tab=challenge&id=1'">
+                                Lihat Progres <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="challenge-item">
+                        <div class="challenge-icon">
+                            <i class="fas fa-running"></i>
+                        </div>
+                        <div class="challenge-content">
+                            <div class="challenge-title">
+                                <span class="challenge-name">30 day squat challenge</span>
+                                <span class="challenge-progress-text" id="challengeSquatProgress">10% (Hari ke-3)</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="challengeSquatFill" style="width: 10%"></div>
+                            </div>
+                            <button class="challenge-btn" onclick="window.location.href='konten.html?tab=challenge&id=2'">
+                                Mulai Latihan <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="daily-content-card">
                 <div class="card-header">
                     <i class="fas fa-bolt"></i>
@@ -186,7 +204,6 @@
                     <span class="daily-badge">Rekomendasi untukmu</span>
                 </div>
                 <div class="daily-content-grid">
-                    <!-- Gerakan Hari Ini -->
                     <div class="daily-item" onclick="window.location.href='konten.html?tab=olahraga'">
                         <div class="daily-item-icon">
                             <i class="fas fa-running"></i>
@@ -203,10 +220,9 @@
                         </div>
                     </div>
 
-                    <!-- Resep Hari Ini -->
                     <div class="daily-item" onclick="window.location.href='konten.html?tab=nutrisi'">
                         <div class="daily-item-icon">
-                            <i class="fas fa-salad"></i>
+                            <i class="fas fa-apple-alt"></i>
                         </div>
                         <div class="daily-item-content">
                             <h4>Resep Hari Ini</h4>
@@ -220,7 +236,6 @@
                         </div>
                     </div>
 
-                    <!-- Tips Screen Time -->
                     <div class="daily-item" onclick="window.location.href='konten.html?tab=wellness'">
                         <div class="daily-item-icon">
                             <i class="fas fa-mobile-alt"></i>
@@ -239,7 +254,6 @@
                 </div>
             </div>
 
-            <!-- STATISTIK MINGGU INI -->
             <div class="weekly-stats-card">
                 <div class="card-header">
                     <i class="fas fa-chart-line"></i>
@@ -298,7 +312,6 @@
                 </div>
             </div>
 
-            <!-- GRAFIK BERAT BADAN -->
             <div class="weight-chart-card">
                 <div class="card-header">
                     <i class="fas fa-chart-line"></i>
@@ -330,8 +343,43 @@
                     </div>
                 </div>
             </div>
+
+            <!-- REKOMENDASI UNTUKMU - TANPA ICON -->
+            <div class="recommendation-card">
+                <div class="card-header">
+                    <i class="fas fa-brain"></i>
+                    <h3>Rekomendasi Untukmu</h3>
+                </div>
+                <div class="recommendation-text">
+                    <p class="recommendation-basis" id="recommendationBasis">Berdasarkan usia 25 tahun</p>
+                    <ul class="recommendation-list" id="recommendationList">
+                        <li><a href="konten.html?tab=olahraga&id=postur">Latihan untuk postur duduk</a></li>
+                        <li><a href="konten.html?tab=nutrisi&id=energi">Makanan penambah energi</a></li>
+                        <li><a href="konten.html?tab=wellness&id=screentime">Tips kurangi screen time</a></li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </main>
+
+    <!-- FOOTER - TANPA SOCIAL MEDIA -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <i class="fas fa-leaf"></i>
+                <span>HEALTEACH</span>
+            </div>
+            <div class="footer-links">
+                <a href="#">Tentang Kami</a>
+                <a href="#">Kebijakan Privasi</a>
+                <a href="#">Syarat & Ketentuan</a>
+                <a href="#">Bantuan</a>
+            </div>
+            <div class="footer-copyright">
+                &copy; 2026 HEALTEACH. All rights reserved.
+            </div>
+        </div>
+    </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="assets/js/script.js"></script>

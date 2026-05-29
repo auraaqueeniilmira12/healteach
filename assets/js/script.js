@@ -1,6 +1,6 @@
 // ============================================
 // HEALTEACH - Main JavaScript
-// Mengelola data user, sambutan, streak, pencapaian, statistik mingguan, grafik berat badan, konten harian, dan ringkasan harian
+// Mengelola data user, sambutan, streak, pencapaian, statistik mingguan, grafik berat badan, konten harian, ringkasan harian, tantangan aktif, dan rekomendasi dinamis
 // ============================================
 
 // ========== DATA USER MANAGEMENT ==========
@@ -509,7 +509,6 @@ function displayWeeklyStats() {
 
 // ========== DAILY SUMMARY (Hari Ini) ==========
 
-// Mendapatkan data ringkasan harian user
 function getDailySummaryData() {
     const currentUser = getCurrentUser();
     if (!currentUser) return null;
@@ -520,13 +519,11 @@ function getDailySummaryData() {
     
     if (dailyData) {
         dailyData = JSON.parse(dailyData);
-        // Cek apakah data masih untuk hari ini
         if (dailyData.date === today) {
             return dailyData;
         }
     }
     
-    // Inisialisasi data baru untuk hari ini
     const newData = {
         date: today,
         checklist: 0,
@@ -545,7 +542,6 @@ function getDailySummaryData() {
     return newData;
 }
 
-// Menyimpan data ringkasan harian
 function saveDailySummaryData(data) {
     const currentUser = getCurrentUser();
     if (!currentUser) return;
@@ -553,7 +549,6 @@ function saveDailySummaryData(data) {
     localStorage.setItem(key, JSON.stringify(data));
 }
 
-// Update ringkasan harian
 function updateDailySummary(type, value) {
     const dailyData = getDailySummaryData();
     if (!dailyData) return false;
@@ -596,7 +591,6 @@ function updateDailySummary(type, value) {
     return true;
 }
 
-// Reset data harian (bisa dipanggil setiap pergantian hari)
 function resetDailySummary() {
     const currentUser = getCurrentUser();
     if (!currentUser) return;
@@ -608,7 +602,6 @@ function resetDailySummary() {
     if (existingData) {
         const parsed = JSON.parse(existingData);
         if (parsed.date !== today) {
-            // Reset untuk hari baru
             const newData = {
                 date: today,
                 checklist: 0,
@@ -627,12 +620,10 @@ function resetDailySummary() {
     }
 }
 
-// Menampilkan ringkasan harian ke halaman
 function displayDailySummary() {
     const dailyData = getDailySummaryData();
     if (!dailyData) return;
     
-    // Update tanggal
     const summaryDateEl = document.getElementById('summaryDate');
     if (summaryDateEl) {
         const today = new Date();
@@ -640,40 +631,231 @@ function displayDailySummary() {
         summaryDateEl.textContent = today.toLocaleDateString('id-ID', options);
     }
     
-    // Update Checklist
     const checklistProgressEl = document.getElementById('checklistProgress');
     const checklistFillEl = document.getElementById('checklistFill');
     const checklistPercent = (dailyData.checklist / dailyData.totalChecklist) * 100;
     if (checklistProgressEl) checklistProgressEl.textContent = `${dailyData.checklist}/${dailyData.totalChecklist}`;
     if (checklistFillEl) checklistFillEl.style.width = `${checklistPercent}%`;
     
-    // Update Langkah
     const stepsProgressEl = document.getElementById('stepsProgress');
     const stepsFillEl = document.getElementById('stepsFill');
     const stepsPercent = (dailyData.steps / dailyData.targetSteps) * 100;
     if (stepsProgressEl) stepsProgressEl.textContent = `${dailyData.steps.toLocaleString()}/${dailyData.targetSteps.toLocaleString()}`;
     if (stepsFillEl) stepsFillEl.style.width = `${Math.min(stepsPercent, 100)}%`;
     
-    // Update Air
     const waterProgressEl = document.getElementById('waterProgress');
     const waterFillEl = document.getElementById('waterFill');
     const waterPercent = (dailyData.water / dailyData.targetWater) * 100;
     if (waterProgressEl) waterProgressEl.textContent = `${dailyData.water}/${dailyData.targetWater} gelas`;
     if (waterFillEl) waterFillEl.style.width = `${Math.min(waterPercent, 100)}%`;
     
-    // Update Tidur
     const sleepProgressEl = document.getElementById('sleepProgress');
     const sleepFillEl = document.getElementById('sleepFill');
     const sleepPercent = (dailyData.sleep / dailyData.targetSleep) * 100;
     if (sleepProgressEl) sleepProgressEl.textContent = `${dailyData.sleep}/${dailyData.targetSleep} jam`;
     if (sleepFillEl) sleepFillEl.style.width = `${Math.min(sleepPercent, 100)}%`;
     
-    // Update Screen Time
     const screentimeProgressEl = document.getElementById('screentimeProgress');
     const screentimeFillEl = document.getElementById('screentimeFill');
     const screentimePercent = (dailyData.screentime / dailyData.targetScreentime) * 100;
     if (screentimeProgressEl) screentimeProgressEl.textContent = `${dailyData.screentime}/${dailyData.targetScreentime} jam`;
     if (screentimeFillEl) screentimeFillEl.style.width = `${Math.min(screentimePercent, 100)}%`;
+}
+
+// ========== TANTANGAN AKTIF (CHALLENGES) ==========
+
+const challengesDatabase = {
+    water: {
+        id: 1,
+        name: '7 hari minum 2L air',
+        icon: 'fa-tint',
+        targetDays: 7,
+        currentDay: 3,
+        totalProgress: 40,
+        buttonText: 'Lihat Progres',
+        buttonIcon: 'fa-arrow-right',
+        link: 'konten.html?tab=challenge&id=1'
+    },
+    squat: {
+        id: 2,
+        name: '30 day squat challenge',
+        icon: 'fa-running',
+        targetDays: 30,
+        currentDay: 3,
+        totalProgress: 10,
+        buttonText: 'Mulai Latihan',
+        buttonIcon: 'fa-arrow-right',
+        link: 'konten.html?tab=challenge&id=2'
+    }
+};
+
+function getUserChallenges() {
+    const currentUser = getCurrentUser();
+    if (!currentUser) return null;
+    
+    const key = `userChallenges_${currentUser.id || currentUser.email}`;
+    let challenges = localStorage.getItem(key);
+    
+    if (challenges) {
+        return JSON.parse(challenges);
+    }
+    
+    const defaultChallenges = {
+        water: { currentDay: 2, completed: false, startDate: new Date().toLocaleDateString('id-ID') },
+        squat: { currentDay: 3, completed: false, startDate: new Date().toLocaleDateString('id-ID') }
+    };
+    
+    localStorage.setItem(key, JSON.stringify(defaultChallenges));
+    return defaultChallenges;
+}
+
+function saveUserChallenges(data) {
+    const currentUser = getCurrentUser();
+    if (!currentUser) return;
+    const key = `userChallenges_${currentUser.id || currentUser.email}`;
+    localStorage.setItem(key, JSON.stringify(data));
+}
+
+function updateChallengeProgress(challengeId, newDay) {
+    const userChallenges = getUserChallenges();
+    if (!userChallenges) return false;
+    
+    if (challengeId === 'water' && userChallenges.water) {
+        userChallenges.water.currentDay = newDay;
+        userChallenges.water.completed = newDay >= 7;
+    } else if (challengeId === 'squat' && userChallenges.squat) {
+        userChallenges.squat.currentDay = newDay;
+        userChallenges.squat.completed = newDay >= 30;
+    }
+    
+    saveUserChallenges(userChallenges);
+    displayChallenges();
+    return true;
+}
+
+function displayChallenges() {
+    const userChallenges = getUserChallenges();
+    if (!userChallenges) return;
+    
+    const waterProgress = userChallenges.water;
+    const waterCurrentDay = waterProgress.currentDay;
+    const waterTargetDays = challengesDatabase.water.targetDays;
+    const waterPercent = (waterCurrentDay / waterTargetDays) * 100;
+    const waterProgressText = `${Math.round(waterPercent)}% (Hari ke-${waterCurrentDay})`;
+    
+    const waterProgressEl = document.getElementById('challengeWaterProgress');
+    const waterFillEl = document.getElementById('challengeWaterFill');
+    if (waterProgressEl) waterProgressEl.textContent = waterProgressText;
+    if (waterFillEl) waterFillEl.style.width = `${waterPercent}%`;
+    
+    const squatProgress = userChallenges.squat;
+    const squatCurrentDay = squatProgress.currentDay;
+    const squatTargetDays = challengesDatabase.squat.targetDays;
+    const squatPercent = (squatCurrentDay / squatTargetDays) * 100;
+    const squatProgressText = `${Math.round(squatPercent)}% (Hari ke-${squatCurrentDay})`;
+    
+    const squatProgressEl = document.getElementById('challengeSquatProgress');
+    const squatFillEl = document.getElementById('challengeSquatFill');
+    if (squatProgressEl) squatProgressEl.textContent = squatProgressText;
+    if (squatFillEl) squatFillEl.style.width = `${squatPercent}%`;
+}
+
+function resetChallengesDaily() {
+    const userChallenges = getUserChallenges();
+    if (!userChallenges) return;
+    
+    const today = new Date().toLocaleDateString('id-ID');
+    const lastUpdateKey = `challengesLastUpdate_${getCurrentUser()?.id || getCurrentUser()?.email}`;
+    const lastUpdate = localStorage.getItem(lastUpdateKey);
+    
+    if (lastUpdate !== today) {
+        if (userChallenges.water && !userChallenges.water.completed) {
+            userChallenges.water.currentDay = Math.min(userChallenges.water.currentDay + 1, 7);
+            userChallenges.water.completed = userChallenges.water.currentDay >= 7;
+        }
+        if (userChallenges.squat && !userChallenges.squat.completed) {
+            userChallenges.squat.currentDay = Math.min(userChallenges.squat.currentDay + 1, 30);
+            userChallenges.squat.completed = userChallenges.squat.currentDay >= 30;
+        }
+        
+        saveUserChallenges(userChallenges);
+        localStorage.setItem(lastUpdateKey, today);
+        displayChallenges();
+    }
+}
+
+// ========== REKOMENDASI DINAMIS ==========
+
+const recommendationsDatabase = {
+    postur: [
+        { id: 1, title: 'Latihan untuk postur duduk', link: 'konten.html?tab=olahraga&id=postur1', icon: 'fa-chair' },
+        { id: 2, title: 'Peregangan leher untuk pekerja kantoran', link: 'konten.html?tab=olahraga&id=postur2', icon: 'fa-neck' },
+        { id: 3, title: 'Latihan punggung atas', link: 'konten.html?tab=olahraga&id=postur3', icon: 'fa-spine' },
+        { id: 4, title: 'Tips duduk ergonomis', link: 'konten.html?tab=wellness&id=postur4', icon: 'fa-desk' }
+    ],
+    energi: [
+        { id: 1, title: 'Makanan penambah energi', link: 'konten.html?tab=nutrisi&id=energi1', icon: 'fa-apple-alt' },
+        { id: 2, title: '5 camilan sehat untuk stamina', link: 'konten.html?tab=nutrisi&id=energi2', icon: 'fa-carrot' },
+        { id: 3, title: 'Resep smoothie energi pagi', link: 'konten.html?tab=nutrisi&id=energi3', icon: 'fa-blender' },
+        { id: 4, title: 'Makanan kaya zat besi', link: 'konten.html?tab=nutrisi&id=energi4', icon: 'fa-leaf' }
+    ],
+    screentime: [
+        { id: 1, title: 'Tips kurangi screen time', link: 'konten.html?tab=wellness&id=screentime1', icon: 'fa-mobile-alt' },
+        { id: 2, title: 'Istirahat mata 20-20-20', link: 'konten.html?tab=wellness&id=screentime2', icon: 'fa-eye' },
+        { id: 3, title: 'Mode malam untuk kesehatan mata', link: 'konten.html?tab=wellness&id=screentime3', icon: 'fa-moon' },
+        { id: 4, title: 'Batasi gadget sebelum tidur', link: 'konten.html?tab=wellness&id=screentime4', icon: 'fa-bed' }
+    ]
+};
+
+function getUserAge() {
+    const userProfile = getProfileData();
+    if (userProfile && userProfile.age) {
+        return userProfile.age;
+    }
+    return 25;
+}
+
+function getRecommendationBasis() {
+    const age = getUserAge();
+    return `Berdasarkan usia ${age} tahun`;
+}
+
+function getDailyRecommendations() {
+    const today = new Date();
+    const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
+    
+    const posturIndex = dayOfYear % recommendationsDatabase.postur.length;
+    const energiIndex = (dayOfYear + 1) % recommendationsDatabase.energi.length;
+    const screentimeIndex = (dayOfYear + 2) % recommendationsDatabase.screentime.length;
+    
+    return [
+        recommendationsDatabase.postur[posturIndex],
+        recommendationsDatabase.energi[energiIndex],
+        recommendationsDatabase.screentime[screentimeIndex]
+    ];
+}
+
+function displayRecommendations() {
+    const recommendations = getDailyRecommendations();
+    const basisText = getRecommendationBasis();
+    
+    const basisEl = document.getElementById('recommendationBasis');
+    const listEl = document.getElementById('recommendationList');
+    
+    if (basisEl) {
+        basisEl.textContent = basisText;
+    }
+    
+    if (listEl) {
+        listEl.innerHTML = recommendations.map(rec => `
+            <li>
+                <a href="${rec.link}">
+                    <i class="fas ${rec.icon}"></i>
+                    ${rec.title}
+                </a>
+            </li>
+        `).join('');
+    }
 }
 
 // ========== WEIGHT CHART / GRAFIK BERAT BADAN ==========
@@ -828,11 +1010,11 @@ const contentDatabase = {
         { id: 5, title: '1 Gerakan Hari Ini', description: 'Jumping jack 50x', duration: '2 menit', icon: 'fa-running', link: 'konten.html?tab=olahraga&id=5' }
     ],
     resep: [
-        { id: 1, title: 'Resep Hari Ini', description: 'Salad sayur segar dengan yogurt', duration: '5 menit baca', icon: 'fa-salad', link: 'konten.html?tab=nutrisi&id=1' },
-        { id: 2, title: 'Resep Hari Ini', description: 'Smoothie bowl buah', duration: '4 menit baca', icon: 'fa-salad', link: 'konten.html?tab=nutrisi&id=2' },
-        { id: 3, title: 'Resep Hari Ini', description: 'Oatmeal sehat', duration: '3 menit baca', icon: 'fa-salad', link: 'konten.html?tab=nutrisi&id=3' },
-        { id: 4, title: 'Resep Hari Ini', description: 'Ayam panggang rempah', duration: '6 menit baca', icon: 'fa-salad', link: 'konten.html?tab=nutrisi&id=4' },
-        { id: 5, title: 'Resep Hari Ini', description: 'Jus detoks sayur', duration: '3 menit baca', icon: 'fa-salad', link: 'konten.html?tab=nutrisi&id=5' }
+        { id: 1, title: 'Resep Hari Ini', description: 'Salad sayur segar dengan yogurt', duration: '5 menit baca', icon: 'fa-apple-alt', link: 'konten.html?tab=nutrisi&id=1' },
+        { id: 2, title: 'Resep Hari Ini', description: 'Smoothie bowl buah', duration: '4 menit baca', icon: 'fa-apple-alt', link: 'konten.html?tab=nutrisi&id=2' },
+        { id: 3, title: 'Resep Hari Ini', description: 'Oatmeal sehat', duration: '3 menit baca', icon: 'fa-apple-alt', link: 'konten.html?tab=nutrisi&id=3' },
+        { id: 4, title: 'Resep Hari Ini', description: 'Ayam panggang rempah', duration: '6 menit baca', icon: 'fa-apple-alt', link: 'konten.html?tab=nutrisi&id=4' },
+        { id: 5, title: 'Resep Hari Ini', description: 'Jus detoks sayur', duration: '3 menit baca', icon: 'fa-apple-alt', link: 'konten.html?tab=nutrisi&id=5' }
     ],
     tips: [
         { id: 1, title: 'Tips Screen Time', description: 'Istirahat mata 20 detik setiap 20 menit', duration: '30 detik baca', icon: 'fa-mobile-alt', link: 'konten.html?tab=wellness&id=1' },
@@ -1004,7 +1186,8 @@ function addAnimationStyles() {
 document.addEventListener('DOMContentLoaded', function() {
     addAnimationStyles();
     
-    resetDailySummary(); // Reset jika hari berganti
+    resetDailySummary();
+    resetChallengesDaily();
     updateStreak();
     checkAndUpdateBadges();
     displayGreeting();
@@ -1014,6 +1197,8 @@ document.addEventListener('DOMContentLoaded', function() {
     displayWeightSummary();
     displayDailyContent();
     displayDailySummary();
+    displayChallenges();
+    displayRecommendations();
     
     initSearch();
     initAvatarClick();
@@ -1038,3 +1223,8 @@ window.displayDailyContent = displayDailyContent;
 window.updateDailySummary = updateDailySummary;
 window.displayDailySummary = displayDailySummary;
 window.getDailySummaryData = getDailySummaryData;
+window.getUserChallenges = getUserChallenges;
+window.updateChallengeProgress = updateChallengeProgress;
+window.displayChallenges = displayChallenges;
+window.displayRecommendations = displayRecommendations;
+window.getDailyRecommendations = getDailyRecommendations;

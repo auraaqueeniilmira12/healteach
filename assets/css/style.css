@@ -9,9 +9,9 @@ body {
     background-color: #f5f7fa;
     display: flex;
     min-height: 100vh;
+    flex-direction: column;
 }
 
-/* ========== SIDEBAR (versi desktop) ========== */
 .sidebar {
     background: linear-gradient(135deg, #6a1b9a 0%, #8e24aa 100%);
     width: 280px;
@@ -27,7 +27,6 @@ body {
     padding: 24px 0 32px 0;
 }
 
-/* ========== LOGO ========== */
 .logo {
     display: flex;
     align-items: center;
@@ -48,7 +47,6 @@ body {
     letter-spacing: 1px;
 }
 
-/* ========== NAV LINKS (vertical di desktop) ========== */
 .nav-links {
     display: flex;
     flex-direction: column;
@@ -89,7 +87,6 @@ body {
     transform: scale(0.98);
 }
 
-/* ========== NAV ICONS (di sidebar bagian bawah desktop) ========== */
 .nav-icons {
     display: flex;
     align-items: center;
@@ -123,7 +120,6 @@ body {
     transform: scale(1.05);
 }
 
-/* Avatar placeholder */
 .avatar-placeholder {
     width: 40px;
     height: 40px;
@@ -148,11 +144,10 @@ body {
     border-color: #e1bee7;
 }
 
-/* ========== MAIN CONTENT AREA ========== */
 .main-content {
     margin-left: 280px;
     flex: 1;
-    min-height: 100vh;
+    min-height: calc(100vh - 200px);
     background: #f5f7fa;
     padding: 30px 40px;
 }
@@ -161,7 +156,6 @@ body {
     max-width: 100%;
 }
 
-/* ========== GREETING CARD ========== */
 .greeting-card {
     background: linear-gradient(135deg, #ffffff 0%, #f8f4fc 100%);
     border-radius: 28px;
@@ -219,7 +213,6 @@ body {
     margin: 0;
 }
 
-/* ========== STATS ROW (STREAK & ACHIEVEMENT) ========== */
 .stats-row {
     display: flex;
     align-items: stretch;
@@ -261,11 +254,11 @@ body {
 }
 
 .streak-icon {
-    background: linear-gradient(135deg, #ff6b35 0%, #ff8c42 100%);
+    background: linear-gradient(135deg, #6a1b9a 0%, #8e24aa 100%);
 }
 
 .achievement-icon {
-    background: linear-gradient(135deg, #f9a825 0%, #fbc02d 100%);
+    background: linear-gradient(135deg, #6a1b9a 0%, #8e24aa 100%);
 }
 
 .stat-info {
@@ -295,7 +288,7 @@ body {
     margin-top: 4px;
 }
 
-/* ========== RINGKASAN HARI INI ========== */
+/* RINGKASAN HARI INI - TANPA PROGRESS BAR */
 .daily-summary-card {
     background: white;
     border-radius: 20px;
@@ -344,6 +337,7 @@ body {
 .summary-item {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 14px;
 }
 
@@ -365,13 +359,13 @@ body {
 
 .summary-content {
     flex: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .summary-label {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 6px;
-    font-size: 13px;
+    font-size: 14px;
     color: #2c3e50;
     font-weight: 500;
 }
@@ -381,21 +375,143 @@ body {
     font-weight: 600;
 }
 
-.progress-bar {
-    height: 8px;
-    background: #f0f0f0;
-    border-radius: 10px;
-    overflow: hidden;
+.challenges-card {
+    background: white;
+    border-radius: 20px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    animation: fadeInUp 0.4s ease-out;
 }
 
-.progress-fill {
-    height: 100%;
+.challenges-card .card-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.challenges-card .card-header i {
+    font-size: 20px;
+    color: #6a1b9a;
+}
+
+.challenges-card .card-header h3 {
+    flex: 1;
+    font-size: 16px;
+    font-weight: 600;
+    color: #2c3e50;
+    margin: 0;
+}
+
+.challenge-badge {
+    font-size: 11px;
+    background: #fef9ff;
+    color: #6a1b9a;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-weight: 500;
+}
+
+.challenges-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.challenge-item {
+    display: flex;
+    gap: 16px;
+    padding: 16px;
+    background: #fef9ff;
+    border-radius: 16px;
+    border: 1px solid rgba(106, 27, 154, 0.08);
+    transition: all 0.3s ease;
+}
+
+.challenge-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(106, 27, 154, 0.1);
+}
+
+.challenge-icon {
+    width: 55px;
+    height: 55px;
+    background: linear-gradient(135deg, #6a1b9a 0%, #8e24aa 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.challenge-icon i {
+    font-size: 26px;
+    color: white;
+}
+
+.challenge-content {
+    flex: 1;
+}
+
+.challenge-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 8px;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.challenge-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: #2c3e50;
+}
+
+.challenge-progress-text {
+    font-size: 11px;
+    color: #6a1b9a;
+    font-weight: 500;
+}
+
+.challenge-content .progress-bar {
+    margin: 10px 0 12px 0;
+}
+
+.challenge-content .progress-fill {
     background: linear-gradient(90deg, #6a1b9a, #8e24aa);
-    border-radius: 10px;
-    transition: width 0.5s ease;
 }
 
-/* ========== KONTEN HARI INI ========== */
+.challenge-btn {
+    background: none;
+    border: none;
+    color: #6a1b9a;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0;
+    transition: all 0.3s ease;
+}
+
+.challenge-btn i {
+    font-size: 10px;
+    transition: transform 0.3s ease;
+}
+
+.challenge-btn:hover {
+    color: #8e24aa;
+}
+
+.challenge-btn:hover i {
+    transform: translateX(3px);
+}
+
 .daily-content-card {
     background: white;
     border-radius: 20px;
@@ -416,7 +532,7 @@ body {
 
 .daily-content-card .card-header i {
     font-size: 20px;
-    color: #f9a825;
+    color: #6a1b9a;
 }
 
 .daily-content-card .card-header h3 {
@@ -516,7 +632,6 @@ body {
     color: #6a1b9a;
 }
 
-/* ========== STATISTIK MINGGU INI ========== */
 .weekly-stats-card {
     background: white;
     border-radius: 20px;
@@ -635,7 +750,6 @@ body {
     color: #7f8c8d;
 }
 
-/* ========== GRAFIK BERAT BADAN ========== */
 .weight-chart-card {
     background: white;
     border-radius: 20px;
@@ -746,7 +860,131 @@ body {
     color: #2c3e50;
 }
 
-/* ========== ANIMASI ========== */
+.recommendation-card {
+    background: white;
+    border-radius: 20px;
+    padding: 20px;
+    margin-top: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    animation: fadeInUp 0.4s ease-out;
+}
+
+.recommendation-card .card-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.recommendation-card .card-header i {
+    font-size: 20px;
+    color: #6a1b9a;
+}
+
+.recommendation-card .card-header h3 {
+    flex: 1;
+    font-size: 16px;
+    font-weight: 600;
+    color: #2c3e50;
+    margin: 0;
+}
+
+.recommendation-basis {
+    font-size: 13px;
+    color: #7f8c8d;
+    margin-bottom: 12px;
+    font-style: italic;
+}
+
+.recommendation-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.recommendation-list li {
+    margin-bottom: 10px;
+    padding: 6px 0;
+}
+
+.recommendation-list li a {
+    color: #6a1b9a;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.recommendation-list li a:hover {
+    color: #8e24aa;
+    transform: translateX(5px);
+    text-decoration: underline;
+}
+
+/* FOOTER - LAYOUT VERTIKAL (SEPERTI GAMBAR) */
+.footer {
+    background: linear-gradient(135deg, #6a1b9a 0%, #8e24aa 100%);
+    color: white;
+    margin-left: 280px;
+    padding: 30px 40px 20px 40px;
+    margin-top: 40px;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.footer-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.footer-logo i {
+    font-size: 24px;
+    color: #ce93d8;
+}
+
+.footer-logo span {
+    font-size: 1.3rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.footer-links {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 25px;
+    margin-bottom: 20px;
+}
+
+.footer-links a {
+    color: #e0e0e0;
+    text-decoration: none;
+    font-size: 13px;
+    transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: white;
+}
+
+.footer-copyright {
+    text-align: center;
+    font-size: 11px;
+    color: #ce93d8;
+    padding-top: 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
 @keyframes fadeInUp {
     from {
         opacity: 0;
@@ -772,18 +1010,18 @@ body {
 .greeting-card,
 .stat-box,
 .daily-summary-card,
+.challenges-card,
 .daily-content-card,
 .weekly-stats-card,
-.weight-chart-card {
+.weight-chart-card,
+.recommendation-card {
     animation: fadeInUp 0.4s ease-out;
 }
 
-/* ========== MOBILE HEADER ========== */
 .mobile-header {
     display: none;
 }
 
-/* ========== RESPONSIVE MOBILE ========== */
 @media (max-width: 768px) {
     body {
         flex-direction: column;
@@ -908,7 +1146,7 @@ body {
     .main-content {
         margin-left: 0;
         padding: 70px 16px 70px 16px;
-        min-height: 100vh;
+        min-height: calc(100vh - 150px);
     }
     
     .greeting-card {
@@ -968,7 +1206,6 @@ body {
         font-size: 9px;
     }
     
-    /* Daily Summary Responsive */
     .summary-item {
         gap: 10px;
     }
@@ -986,7 +1223,24 @@ body {
         font-size: 12px;
     }
     
-    /* Daily Content Responsive */
+    .challenge-item {
+        padding: 14px;
+        gap: 12px;
+    }
+    
+    .challenge-icon {
+        width: 48px;
+        height: 48px;
+    }
+    
+    .challenge-icon i {
+        font-size: 22px;
+    }
+    
+    .challenge-name {
+        font-size: 13px;
+    }
+    
     .daily-item {
         padding: 12px;
         gap: 12px;
@@ -1046,7 +1300,7 @@ body {
         gap: 10px;
     }
     
-    .summary-item {
+    .weight-summary .summary-item {
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -1055,12 +1309,28 @@ body {
         border-radius: 12px;
     }
     
-    .summary-label {
+    .weight-summary .summary-label {
         margin-bottom: 0;
+    }
+    
+    .recommendation-list li a {
+        font-size: 13px;
+    }
+    
+    .footer {
+        margin-left: 0;
+        padding: 25px 20px 15px 20px;
+    }
+    
+    .footer-links {
+        gap: 15px;
+    }
+    
+    .footer-links a {
+        font-size: 11px;
     }
 }
 
-/* ========== MOBILE KECIL ========== */
 @media (max-width: 480px) {
     .mobile-header {
         padding: 10px 12px;
@@ -1154,7 +1424,6 @@ body {
         font-size: 22px;
     }
     
-    /* Daily Summary Mobile Kecil */
     .summary-list {
         gap: 12px;
     }
@@ -1172,7 +1441,25 @@ body {
         font-size: 11px;
     }
     
-    /* Daily Content Mobile Kecil */
+    .challenge-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .challenge-title {
+        flex-direction: column;
+        gap: 4px;
+    }
+    
+    .challenge-icon {
+        width: 45px;
+        height: 45px;
+    }
+    
+    .challenge-icon i {
+        font-size: 20px;
+    }
+    
     .daily-item {
         padding: 10px;
     }
@@ -1219,9 +1506,30 @@ body {
     .stat-item-value {
         font-size: 18px;
     }
+    
+    .recommendation-basis {
+        font-size: 12px;
+    }
+    
+    .recommendation-list li a {
+        font-size: 12px;
+    }
+    
+    .footer {
+        padding: 20px 16px 12px 16px;
+    }
+    
+    .footer-links {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 12px;
+    }
+    
+    .footer-logo span {
+        font-size: 1.1rem;
+    }
 }
 
-/* ========== TABLET ========== */
 @media (min-width: 769px) and (max-width: 1024px) {
     .sidebar {
         width: 250px;
