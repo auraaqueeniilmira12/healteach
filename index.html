@@ -9,20 +9,17 @@
     
     <!-- CEK LOGIN - Redirect ke login jika belum login -->
     <script>
-        // Cek apakah user sudah login
         function checkLoginAndRedirect() {
             const currentUser = localStorage.getItem('currentUser');
             if (!currentUser) {
-                // Jika belum login, redirect ke halaman login
                 window.location.href = 'login.html';
             }
         }
-        // Jalankan pengecekan segera
         checkLoginAndRedirect();
     </script>
 </head>
 <body>
-    <!-- MOBILE HEADER - hanya muncul di versi mobile (≤768px) -->
+    <!-- MOBILE HEADER -->
     <div class="mobile-header">
         <button class="mobile-search-btn"><i class="fas fa-search"></i></button>
         <button class="mobile-bell-btn"><i class="fas fa-bell"></i></button>
@@ -31,7 +28,7 @@
         </div>
     </div>
 
-    <!-- SIDEBAR VERTICAL - di desktop jadi sidebar, di mobile jadi bottom navigation -->
+    <!-- SIDEBAR -->
     <aside class="sidebar">
         <div class="logo">
             <i class="fas fa-leaf"></i>
@@ -55,9 +52,10 @@
         </div>
     </aside>
 
-    <!-- MAIN CONTENT AREA - dengan GREETING CARD baru -->
+    <!-- MAIN CONTENT -->
     <main class="main-content">
         <div class="welcome-section">
+            <!-- GREETING CARD -->
             <div class="greeting-card">
                 <div class="greeting-icon">
                     <i class="fas fa-leaf"></i>
@@ -68,9 +66,187 @@
                     <p id="motivation-quote">Tetap semangat untuk hidup sehat hari ini!</p>
                 </div>
             </div>
+
+            <!-- STREAK & ACHIEVEMENT -->
+            <div class="stats-row">
+                <div class="stat-box">
+                    <div class="stat-icon streak-icon">
+                        <i class="fas fa-fire"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-label">STREAK</span>
+                        <span class="stat-value" id="streakValue">0</span>
+                        <span class="stat-unit">hari aktif</span>
+                    </div>
+                </div>
+
+                <div class="stat-box">
+                    <div class="stat-icon achievement-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-label">PENCAPAIAN</span>
+                        <span class="stat-value" id="achievementCount">0</span>
+                        <span class="stat-unit">lencana</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- KONTEN HARI INI - REKOMENDASI -->
+            <div class="daily-content-card">
+                <div class="card-header">
+                    <h3>Konten Hari Ini</h3>
+                    <span class="daily-badge">Rekomendasi untukmu</span>
+                </div>
+                <div class="daily-content-grid">
+                    <!-- Gerakan Hari Ini -->
+                    <div class="daily-item" onclick="window.location.href='konten.html?tab=olahraga'">
+                        <div class="daily-item-icon">
+                            <i class="fas fa-running"></i>
+                        </div>
+                        <div class="daily-item-content">
+                            <h4>1 Gerakan Hari Ini</h4>
+                            <p>Squat yang benar untuk pemula</p>
+                            <div class="daily-item-meta">
+                                <i class="fas fa-play-circle"></i> 2 menit
+                            </div>
+                        </div>
+                        <div class="daily-item-arrow">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+
+                    <!-- Resep Hari Ini -->
+                    <div class="daily-item" onclick="window.location.href='konten.html?tab=nutrisi'">
+                        <div class="daily-item-icon">
+                            <i class="fas fa-salad"></i>
+                        </div>
+                        <div class="daily-item-content">
+                            <h4>Resep Hari Ini</h4>
+                            <p>Salad sayur segar dengan yogurt</p>
+                            <div class="daily-item-meta">
+                                <i class="fas fa-book-open"></i> 5 menit baca
+                            </div>
+                        </div>
+                        <div class="daily-item-arrow">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+
+                    <!-- Tips Screen Time -->
+                    <div class="daily-item" onclick="window.location.href='konten.html?tab=wellness'">
+                        <div class="daily-item-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <div class="daily-item-content">
+                            <h4>Tips Screen Time</h4>
+                            <p>Istirahat mata 20 detik setiap 20 menit</p>
+                            <div class="daily-item-meta">
+                                <i class="fas fa-hourglass-half"></i> 30 detik baca
+                            </div>
+                        </div>
+                        <div class="daily-item-arrow">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- STATISTIK MINGGU INI -->
+            <div class="weekly-stats-card">
+                <div class="card-header">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>Statistik Minggu Ini</h3>
+                    <span class="week-range" id="weekRange"></span>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-item-icon">
+                            <i class="fas fa-shoe-prints"></i>
+                        </div>
+                        <div class="stat-item-content">
+                            <span class="stat-item-label">Langkah</span>
+                            <span class="stat-item-value" id="weeklySteps">0</span>
+                            <span class="stat-item-trend" id="stepsTrend">
+                                <i class="fas fa-minus-circle"></i> 0%
+                            </span>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-item-icon">
+                            <i class="fas fa-fire"></i>
+                        </div>
+                        <div class="stat-item-content">
+                            <span class="stat-item-label">Kalori</span>
+                            <span class="stat-item-value" id="weeklyCalories">0</span>
+                            <span class="stat-item-trend" id="caloriesTrend">
+                                <i class="fas fa-minus-circle"></i> 0%
+                            </span>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-item-icon">
+                            <i class="fas fa-tint"></i>
+                        </div>
+                        <div class="stat-item-content">
+                            <span class="stat-item-label">Air</span>
+                            <span class="stat-item-value" id="weeklyWater">0</span>
+                            <span class="stat-item-trend" id="waterTrend">
+                                <i class="fas fa-minus-circle"></i> 0%
+                            </span>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-item-icon">
+                            <i class="fas fa-bed"></i>
+                        </div>
+                        <div class="stat-item-content">
+                            <span class="stat-item-label">Tidur</span>
+                            <span class="stat-item-value" id="weeklySleep">0</span>
+                            <span class="stat-item-trend" id="sleepTrend">
+                                <i class="fas fa-minus-circle"></i> 0%
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- GRAFIK BERAT BADAN -->
+            <div class="weight-chart-card">
+                <div class="card-header">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>Grafik Berat Badan</h3>
+                    <div class="weight-target-info">
+                        <span class="target-label">Target</span>
+                        <span class="target-value" id="weightTarget">60 kg</span>
+                        <span class="target-progress" id="weightProgress">▼ -2 kg</span>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <canvas id="weightChart" width="400" height="200" style="width:100%; max-width:100%; height:auto;"></canvas>
+                </div>
+                <div class="chart-months" id="chartMonths">
+                    <span>M1</span><span>M2</span><span>M3</span><span>M4</span>
+                </div>
+                <div class="weight-summary">
+                    <div class="summary-item">
+                        <span class="summary-label">Berat Saat Ini</span>
+                        <span class="summary-value" id="currentWeight">-- kg</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-label">Berat Awal</span>
+                        <span class="summary-value" id="startWeight">-- kg</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-label">Target Berat</span>
+                        <span class="summary-value" id="targetWeightDisplay">-- kg</span>
+                    </div>
+                </div>
+            </div>
         </div>
     </main>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="assets/js/script.js"></script>
 </body>
 </html>
