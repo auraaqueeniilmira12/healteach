@@ -92,9 +92,96 @@
                 </div>
             </div>
 
+            <!-- RINGKASAN HARI INI -->
+            <div class="daily-summary-card">
+                <div class="card-header">
+                    <i class="fas fa-clipboard-list"></i>
+                    <h3>Ringkasan Hari Ini</h3>
+                    <span class="summary-date" id="summaryDate"></span>
+                </div>
+                <div class="summary-list">
+                    <!-- Checklist -->
+                    <div class="summary-item">
+                        <div class="summary-icon">
+                            <i class="fas fa-check-square"></i>
+                        </div>
+                        <div class="summary-content">
+                            <div class="summary-label">
+                                <span>Checklist</span>
+                                <span class="summary-value-text" id="checklistProgress">0/5</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="checklistFill" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Langkah -->
+                    <div class="summary-item">
+                        <div class="summary-icon">
+                            <i class="fas fa-shoe-prints"></i>
+                        </div>
+                        <div class="summary-content">
+                            <div class="summary-label">
+                                <span>Langkah</span>
+                                <span class="summary-value-text" id="stepsProgress">0/8000</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="stepsFill" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Air -->
+                    <div class="summary-item">
+                        <div class="summary-icon">
+                            <i class="fas fa-tint"></i>
+                        </div>
+                        <div class="summary-content">
+                            <div class="summary-label">
+                                <span>Air</span>
+                                <span class="summary-value-text" id="waterProgress">0/8 gelas</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="waterFill" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Tidur -->
+                    <div class="summary-item">
+                        <div class="summary-icon">
+                            <i class="fas fa-bed"></i>
+                        </div>
+                        <div class="summary-content">
+                            <div class="summary-label">
+                                <span>Tidur</span>
+                                <span class="summary-value-text" id="sleepProgress">0/8 jam</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="sleepFill" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Screen Time -->
+                    <div class="summary-item">
+                        <div class="summary-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <div class="summary-content">
+                            <div class="summary-label">
+                                <span>Screen Time</span>
+                                <span class="summary-value-text" id="screentimeProgress">0/4 jam</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="screentimeFill" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- KONTEN HARI INI - REKOMENDASI -->
             <div class="daily-content-card">
                 <div class="card-header">
+                    <i class="fas fa-bolt"></i>
                     <h3>Konten Hari Ini</h3>
                     <span class="daily-badge">Rekomendasi untukmu</span>
                 </div>

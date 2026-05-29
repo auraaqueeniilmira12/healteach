@@ -295,6 +295,106 @@ body {
     margin-top: 4px;
 }
 
+/* ========== RINGKASAN HARI INI ========== */
+.daily-summary-card {
+    background: white;
+    border-radius: 20px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    animation: fadeInUp 0.4s ease-out;
+}
+
+.daily-summary-card .card-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.daily-summary-card .card-header i {
+    font-size: 20px;
+    color: #6a1b9a;
+}
+
+.daily-summary-card .card-header h3 {
+    flex: 1;
+    font-size: 16px;
+    font-weight: 600;
+    color: #2c3e50;
+    margin: 0;
+}
+
+.summary-date {
+    font-size: 12px;
+    color: #7f8c8d;
+    background: #f5f5f5;
+    padding: 4px 10px;
+    border-radius: 20px;
+}
+
+.summary-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.summary-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.summary-icon {
+    width: 40px;
+    height: 40px;
+    background: #fef9ff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.summary-icon i {
+    font-size: 18px;
+    color: #6a1b9a;
+}
+
+.summary-content {
+    flex: 1;
+}
+
+.summary-label {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 6px;
+    font-size: 13px;
+    color: #2c3e50;
+    font-weight: 500;
+}
+
+.summary-value-text {
+    color: #6a1b9a;
+    font-weight: 600;
+}
+
+.progress-bar {
+    height: 8px;
+    background: #f0f0f0;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #6a1b9a, #8e24aa);
+    border-radius: 10px;
+    transition: width 0.5s ease;
+}
+
 /* ========== KONTEN HARI INI ========== */
 .daily-content-card {
     background: white;
@@ -671,6 +771,7 @@ body {
 
 .greeting-card,
 .stat-box,
+.daily-summary-card,
 .daily-content-card,
 .weekly-stats-card,
 .weight-chart-card {
@@ -867,6 +968,24 @@ body {
         font-size: 9px;
     }
     
+    /* Daily Summary Responsive */
+    .summary-item {
+        gap: 10px;
+    }
+    
+    .summary-icon {
+        width: 36px;
+        height: 36px;
+    }
+    
+    .summary-icon i {
+        font-size: 16px;
+    }
+    
+    .summary-label {
+        font-size: 12px;
+    }
+    
     /* Daily Content Responsive */
     .daily-item {
         padding: 12px;
@@ -1033,6 +1152,24 @@ body {
     
     .stat-value {
         font-size: 22px;
+    }
+    
+    /* Daily Summary Mobile Kecil */
+    .summary-list {
+        gap: 12px;
+    }
+    
+    .summary-icon {
+        width: 32px;
+        height: 32px;
+    }
+    
+    .summary-icon i {
+        font-size: 14px;
+    }
+    
+    .summary-label {
+        font-size: 11px;
     }
     
     /* Daily Content Mobile Kecil */

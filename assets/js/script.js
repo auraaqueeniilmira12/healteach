@@ -1,6 +1,6 @@
 // ============================================
 // HEALTEACH - Main JavaScript
-// Mengelola data user, sambutan, streak, pencapaian, statistik mingguan, grafik berat badan, dan konten harian
+// Mengelola data user, sambutan, streak, pencapaian, statistik mingguan, grafik berat badan, konten harian, dan ringkasan harian
 // ============================================
 
 // ========== DATA USER MANAGEMENT ==========
@@ -285,7 +285,7 @@ function updateProfileStats(streak, badgeCount) {
     }
 }
 
-// ========== WEEKLY STATISTICS ==========
+// ========== WEEKLY STATISTICS (Rata-rata 7 hari) ==========
 
 function getUserStatsKey() {
     const currentUser = getCurrentUser();
@@ -507,6 +507,175 @@ function displayWeeklyStats() {
     }
 }
 
+// ========== DAILY SUMMARY (Hari Ini) ==========
+
+// Mendapatkan data ringkasan harian user
+function getDailySummaryData() {
+    const currentUser = getCurrentUser();
+    if (!currentUser) return null;
+    
+    const today = new Date().toLocaleDateString('id-ID');
+    const key = `dailySummary_${currentUser.id || currentUser.email}`;
+    let dailyData = localStorage.getItem(key);
+    
+    if (dailyData) {
+        dailyData = JSON.parse(dailyData);
+        // Cek apakah data masih untuk hari ini
+        if (dailyData.date === today) {
+            return dailyData;
+        }
+    }
+    
+    // Inisialisasi data baru untuk hari ini
+    const newData = {
+        date: today,
+        checklist: 0,
+        steps: 0,
+        water: 0,
+        sleep: 0,
+        screentime: 0,
+        targetSteps: 8000,
+        targetWater: 8,
+        targetSleep: 8,
+        targetScreentime: 4,
+        totalChecklist: 5
+    };
+    
+    localStorage.setItem(key, JSON.stringify(newData));
+    return newData;
+}
+
+// Menyimpan data ringkasan harian
+function saveDailySummaryData(data) {
+    const currentUser = getCurrentUser();
+    if (!currentUser) return;
+    const key = `dailySummary_${currentUser.id || currentUser.email}`;
+    localStorage.setItem(key, JSON.stringify(data));
+}
+
+// Update ringkasan harian
+function updateDailySummary(type, value) {
+    const dailyData = getDailySummaryData();
+    if (!dailyData) return false;
+    
+    switch(type) {
+        case 'checklist':
+            dailyData.checklist = Math.min(dailyData.totalChecklist, dailyData.checklist + value);
+            break;
+        case 'steps':
+            dailyData.steps += value;
+            break;
+        case 'water':
+            dailyData.water = Math.min(dailyData.targetWater, dailyData.water + value);
+            break;
+        case 'sleep':
+            dailyData.sleep = value;
+            break;
+        case 'screentime':
+            dailyData.screentime = Math.min(dailyData.targetScreentime, dailyData.screentime + value);
+            break;
+        case 'setSteps':
+            dailyData.steps = value;
+            break;
+        case 'setWater':
+            dailyData.water = Math.min(dailyData.targetWater, value);
+            break;
+        case 'setSleep':
+            dailyData.sleep = value;
+            break;
+        case 'setScreentime':
+            dailyData.screentime = Math.min(dailyData.targetScreentime, value);
+            break;
+        case 'setChecklist':
+            dailyData.checklist = Math.min(dailyData.totalChecklist, value);
+            break;
+    }
+    
+    saveDailySummaryData(dailyData);
+    displayDailySummary();
+    return true;
+}
+
+// Reset data harian (bisa dipanggil setiap pergantian hari)
+function resetDailySummary() {
+    const currentUser = getCurrentUser();
+    if (!currentUser) return;
+    
+    const today = new Date().toLocaleDateString('id-ID');
+    const key = `dailySummary_${currentUser.id || currentUser.email}`;
+    const existingData = localStorage.getItem(key);
+    
+    if (existingData) {
+        const parsed = JSON.parse(existingData);
+        if (parsed.date !== today) {
+            // Reset untuk hari baru
+            const newData = {
+                date: today,
+                checklist: 0,
+                steps: 0,
+                water: 0,
+                sleep: 0,
+                screentime: 0,
+                targetSteps: parsed.targetSteps || 8000,
+                targetWater: parsed.targetWater || 8,
+                targetSleep: parsed.targetSleep || 8,
+                targetScreentime: parsed.targetScreentime || 4,
+                totalChecklist: parsed.totalChecklist || 5
+            };
+            localStorage.setItem(key, JSON.stringify(newData));
+        }
+    }
+}
+
+// Menampilkan ringkasan harian ke halaman
+function displayDailySummary() {
+    const dailyData = getDailySummaryData();
+    if (!dailyData) return;
+    
+    // Update tanggal
+    const summaryDateEl = document.getElementById('summaryDate');
+    if (summaryDateEl) {
+        const today = new Date();
+        const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
+        summaryDateEl.textContent = today.toLocaleDateString('id-ID', options);
+    }
+    
+    // Update Checklist
+    const checklistProgressEl = document.getElementById('checklistProgress');
+    const checklistFillEl = document.getElementById('checklistFill');
+    const checklistPercent = (dailyData.checklist / dailyData.totalChecklist) * 100;
+    if (checklistProgressEl) checklistProgressEl.textContent = `${dailyData.checklist}/${dailyData.totalChecklist}`;
+    if (checklistFillEl) checklistFillEl.style.width = `${checklistPercent}%`;
+    
+    // Update Langkah
+    const stepsProgressEl = document.getElementById('stepsProgress');
+    const stepsFillEl = document.getElementById('stepsFill');
+    const stepsPercent = (dailyData.steps / dailyData.targetSteps) * 100;
+    if (stepsProgressEl) stepsProgressEl.textContent = `${dailyData.steps.toLocaleString()}/${dailyData.targetSteps.toLocaleString()}`;
+    if (stepsFillEl) stepsFillEl.style.width = `${Math.min(stepsPercent, 100)}%`;
+    
+    // Update Air
+    const waterProgressEl = document.getElementById('waterProgress');
+    const waterFillEl = document.getElementById('waterFill');
+    const waterPercent = (dailyData.water / dailyData.targetWater) * 100;
+    if (waterProgressEl) waterProgressEl.textContent = `${dailyData.water}/${dailyData.targetWater} gelas`;
+    if (waterFillEl) waterFillEl.style.width = `${Math.min(waterPercent, 100)}%`;
+    
+    // Update Tidur
+    const sleepProgressEl = document.getElementById('sleepProgress');
+    const sleepFillEl = document.getElementById('sleepFill');
+    const sleepPercent = (dailyData.sleep / dailyData.targetSleep) * 100;
+    if (sleepProgressEl) sleepProgressEl.textContent = `${dailyData.sleep}/${dailyData.targetSleep} jam`;
+    if (sleepFillEl) sleepFillEl.style.width = `${Math.min(sleepPercent, 100)}%`;
+    
+    // Update Screen Time
+    const screentimeProgressEl = document.getElementById('screentimeProgress');
+    const screentimeFillEl = document.getElementById('screentimeFill');
+    const screentimePercent = (dailyData.screentime / dailyData.targetScreentime) * 100;
+    if (screentimeProgressEl) screentimeProgressEl.textContent = `${dailyData.screentime}/${dailyData.targetScreentime} jam`;
+    if (screentimeFillEl) screentimeFillEl.style.width = `${Math.min(screentimePercent, 100)}%`;
+}
+
 // ========== WEIGHT CHART / GRAFIK BERAT BADAN ==========
 
 let weightChart = null;
@@ -570,8 +739,7 @@ function displayWeightChart() {
     
     const progress = weightData.startWeight - weightData.targetWeight;
     const currentProgress = weightData.startWeight - weightData.currentWeight;
-    const progressPercent = Math.round((currentProgress / progress) * 100);
-    const progressText = progressPercent > 0 ? `▼ -${currentProgress} kg` : `▲ +${Math.abs(currentProgress)} kg`;
+    const progressText = progress > 0 ? `▼ -${currentProgress} kg` : `▲ +${Math.abs(currentProgress)} kg`;
     
     const targetValueEl = document.getElementById('weightTarget');
     const targetProgressEl = document.getElementById('weightProgress');
@@ -651,37 +819,34 @@ function displayWeightSummary() {
 
 // ========== KONTEN HARIAN DINAMIS ==========
 
-// Database konten (bisa ditambah/dikembangkan nanti)
 const contentDatabase = {
     gerakan: [
-        { id: 1, title: '1 Gerakan Hari Ini', description: 'Squat yang benar untuk pemula', duration: '2 menit', icon: 'fa-running', link: 'konten.html?tab=olahraga&id=1', image: null },
-        { id: 2, title: '1 Gerakan Hari Ini', description: 'Push-up untuk pemula', duration: '3 menit', icon: 'fa-running', link: 'konten.html?tab=olahraga&id=2', image: null },
-        { id: 3, title: '1 Gerakan Hari Ini', description: 'Plank 30 detik', duration: '1 menit', icon: 'fa-running', link: 'konten.html?tab=olahraga&id=3', image: null },
-        { id: 4, title: '1 Gerakan Hari Ini', description: 'Lunge untuk kaki kuat', duration: '2 menit', icon: 'fa-running', link: 'konten.html?tab=olahraga&id=4', image: null },
-        { id: 5, title: '1 Gerakan Hari Ini', description: 'Jumping jack 50x', duration: '2 menit', icon: 'fa-running', link: 'konten.html?tab=olahraga&id=5', image: null }
+        { id: 1, title: '1 Gerakan Hari Ini', description: 'Squat yang benar untuk pemula', duration: '2 menit', icon: 'fa-running', link: 'konten.html?tab=olahraga&id=1' },
+        { id: 2, title: '1 Gerakan Hari Ini', description: 'Push-up untuk pemula', duration: '3 menit', icon: 'fa-running', link: 'konten.html?tab=olahraga&id=2' },
+        { id: 3, title: '1 Gerakan Hari Ini', description: 'Plank 30 detik', duration: '1 menit', icon: 'fa-running', link: 'konten.html?tab=olahraga&id=3' },
+        { id: 4, title: '1 Gerakan Hari Ini', description: 'Lunge untuk kaki kuat', duration: '2 menit', icon: 'fa-running', link: 'konten.html?tab=olahraga&id=4' },
+        { id: 5, title: '1 Gerakan Hari Ini', description: 'Jumping jack 50x', duration: '2 menit', icon: 'fa-running', link: 'konten.html?tab=olahraga&id=5' }
     ],
     resep: [
-        { id: 1, title: 'Resep Hari Ini', description: 'Salad sayur segar dengan yogurt', duration: '5 menit baca', icon: 'fa-salad', link: 'konten.html?tab=nutrisi&id=1', image: null },
-        { id: 2, title: 'Resep Hari Ini', description: 'Smoothie bowl buah', duration: '4 menit baca', icon: 'fa-salad', link: 'konten.html?tab=nutrisi&id=2', image: null },
-        { id: 3, title: 'Resep Hari Ini', description: 'Oatmeal sehat', duration: '3 menit baca', icon: 'fa-salad', link: 'konten.html?tab=nutrisi&id=3', image: null },
-        { id: 4, title: 'Resep Hari Ini', description: 'Ayam panggang rempah', duration: '6 menit baca', icon: 'fa-salad', link: 'konten.html?tab=nutrisi&id=4', image: null },
-        { id: 5, title: 'Resep Hari Ini', description: 'Jus detoks sayur', duration: '3 menit baca', icon: 'fa-salad', link: 'konten.html?tab=nutrisi&id=5', image: null }
+        { id: 1, title: 'Resep Hari Ini', description: 'Salad sayur segar dengan yogurt', duration: '5 menit baca', icon: 'fa-salad', link: 'konten.html?tab=nutrisi&id=1' },
+        { id: 2, title: 'Resep Hari Ini', description: 'Smoothie bowl buah', duration: '4 menit baca', icon: 'fa-salad', link: 'konten.html?tab=nutrisi&id=2' },
+        { id: 3, title: 'Resep Hari Ini', description: 'Oatmeal sehat', duration: '3 menit baca', icon: 'fa-salad', link: 'konten.html?tab=nutrisi&id=3' },
+        { id: 4, title: 'Resep Hari Ini', description: 'Ayam panggang rempah', duration: '6 menit baca', icon: 'fa-salad', link: 'konten.html?tab=nutrisi&id=4' },
+        { id: 5, title: 'Resep Hari Ini', description: 'Jus detoks sayur', duration: '3 menit baca', icon: 'fa-salad', link: 'konten.html?tab=nutrisi&id=5' }
     ],
     tips: [
-        { id: 1, title: 'Tips Screen Time', description: 'Istirahat mata 20 detik setiap 20 menit', duration: '30 detik baca', icon: 'fa-mobile-alt', link: 'konten.html?tab=wellness&id=1', image: null },
-        { id: 2, title: 'Tips Screen Time', description: 'Posisi duduk ergonomis', duration: '2 menit baca', icon: 'fa-mobile-alt', link: 'konten.html?tab=wellness&id=2', image: null },
-        { id: 3, title: 'Tips Screen Time', description: 'Batasi screen time sebelum tidur', duration: '3 menit baca', icon: 'fa-mobile-alt', link: 'konten.html?tab=wellness&id=3', image: null },
-        { id: 4, title: 'Tips Screen Time', description: 'Mode malam untuk kesehatan mata', duration: '2 menit baca', icon: 'fa-mobile-alt', link: 'konten.html?tab=wellness&id=4', image: null },
-        { id: 5, title: 'Tips Screen Time', description: 'Jarak ideal mata ke layar', duration: '2 menit baca', icon: 'fa-mobile-alt', link: 'konten.html?tab=wellness&id=5', image: null }
+        { id: 1, title: 'Tips Screen Time', description: 'Istirahat mata 20 detik setiap 20 menit', duration: '30 detik baca', icon: 'fa-mobile-alt', link: 'konten.html?tab=wellness&id=1' },
+        { id: 2, title: 'Tips Screen Time', description: 'Posisi duduk ergonomis', duration: '2 menit baca', icon: 'fa-mobile-alt', link: 'konten.html?tab=wellness&id=2' },
+        { id: 3, title: 'Tips Screen Time', description: 'Batasi screen time sebelum tidur', duration: '3 menit baca', icon: 'fa-mobile-alt', link: 'konten.html?tab=wellness&id=3' },
+        { id: 4, title: 'Tips Screen Time', description: 'Mode malam untuk kesehatan mata', duration: '2 menit baca', icon: 'fa-mobile-alt', link: 'konten.html?tab=wellness&id=4' },
+        { id: 5, title: 'Tips Screen Time', description: 'Jarak ideal mata ke layar', duration: '2 menit baca', icon: 'fa-mobile-alt', link: 'konten.html?tab=wellness&id=5' }
     ]
 };
 
-// Mendapatkan konten berdasarkan tanggal (berganti setiap hari)
 function getDailyContent() {
     const today = new Date();
     const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
     
-    // Pilih index berdasarkan tanggal (berganti setiap hari)
     const gerakanIndex = dayOfYear % contentDatabase.gerakan.length;
     const resepIndex = (dayOfYear + 1) % contentDatabase.resep.length;
     const tipsIndex = (dayOfYear + 2) % contentDatabase.tips.length;
@@ -693,11 +858,9 @@ function getDailyContent() {
     };
 }
 
-// Menampilkan konten harian ke halaman
 function displayDailyContent() {
     const dailyContent = getDailyContent();
     
-    // Update konten gerakan
     const gerakanTitleEl = document.querySelector('.daily-item:nth-child(1) h4');
     const gerakanDescEl = document.querySelector('.daily-item:nth-child(1) p');
     const gerakanMetaEl = document.querySelector('.daily-item:nth-child(1) .daily-item-meta');
@@ -708,7 +871,6 @@ function displayDailyContent() {
     if (gerakanMetaEl) gerakanMetaEl.innerHTML = `<i class="fas fa-play-circle"></i> ${dailyContent.gerakan.duration}`;
     if (gerakanIconEl) gerakanIconEl.className = `fas ${dailyContent.gerakan.icon}`;
     
-    // Update konten resep
     const resepTitleEl = document.querySelector('.daily-item:nth-child(2) h4');
     const resepDescEl = document.querySelector('.daily-item:nth-child(2) p');
     const resepMetaEl = document.querySelector('.daily-item:nth-child(2) .daily-item-meta');
@@ -719,7 +881,6 @@ function displayDailyContent() {
     if (resepMetaEl) resepMetaEl.innerHTML = `<i class="fas fa-book-open"></i> ${dailyContent.resep.duration}`;
     if (resepIconEl) resepIconEl.className = `fas ${dailyContent.resep.icon}`;
     
-    // Update konten tips
     const tipsTitleEl = document.querySelector('.daily-item:nth-child(3) h4');
     const tipsDescEl = document.querySelector('.daily-item:nth-child(3) p');
     const tipsMetaEl = document.querySelector('.daily-item:nth-child(3) .daily-item-meta');
@@ -729,19 +890,6 @@ function displayDailyContent() {
     if (tipsDescEl) tipsDescEl.textContent = dailyContent.tips.description;
     if (tipsMetaEl) tipsMetaEl.innerHTML = `<i class="fas fa-hourglass-half"></i> ${dailyContent.tips.duration}`;
     if (tipsIconEl) tipsIconEl.className = `fas ${dailyContent.tips.icon}`;
-    
-    // Simpan ke localStorage untuk tracking
-    const currentUser = getCurrentUser();
-    if (currentUser) {
-        const today = new Date().toLocaleDateString('id-ID');
-        const viewedContent = {
-            date: today,
-            gerakanId: dailyContent.gerakan.id,
-            resepId: dailyContent.resep.id,
-            tipsId: dailyContent.tips.id
-        };
-        localStorage.setItem(`dailyContent_${currentUser.id || currentUser.email}`, JSON.stringify(viewedContent));
-    }
 }
 
 // ========== CALCULATE BMI ==========
@@ -856,6 +1004,7 @@ function addAnimationStyles() {
 document.addEventListener('DOMContentLoaded', function() {
     addAnimationStyles();
     
+    resetDailySummary(); // Reset jika hari berganti
     updateStreak();
     checkAndUpdateBadges();
     displayGreeting();
@@ -864,6 +1013,7 @@ document.addEventListener('DOMContentLoaded', function() {
     displayWeightChart();
     displayWeightSummary();
     displayDailyContent();
+    displayDailySummary();
     
     initSearch();
     initAvatarClick();
@@ -885,3 +1035,6 @@ window.updateCurrentWeight = updateCurrentWeight;
 window.displayWeightChart = displayWeightChart;
 window.getDailyContent = getDailyContent;
 window.displayDailyContent = displayDailyContent;
+window.updateDailySummary = updateDailySummary;
+window.displayDailySummary = displayDailySummary;
+window.getDailySummaryData = getDailySummaryData;
